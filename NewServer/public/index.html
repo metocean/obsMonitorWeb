@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> 
+    </head>
+    <body>
+        
+    </body>
+    <script>
+        $.get('/currentstatus', function(data) {
+           var rows = JSON.parse(data);
+           console.log(rows);
+           $("body").append("<table name=\"status\" border=\"1\" style=\"text-align:left\" >"
+                      +"<tr><th>"
+                      +"</th><th>site"
+                      +"</th><th>product"
+                      +"</th><th>type"
+                      +"</th><th>status"
+                      +"</th><th>Status Description"
+                      +"</th></tr>")
+            for (d in rows) {
+                if (rows[d].disabled === 1) {
+                    $("table").append("<tr><td><a href=\"\edit.html?site="+rows[d].site+"&product="+rows[d].product+"\">Edit</a>"
+                        +"</td><td>"+rows[d].site
+                        +"</td><td>"+rows[d].product
+                        +"</td><td>"+rows[d].obs_type
+                        +"</td><td></td><td>Disabled</td></tr>");                
+                }
+                else {
+                    $("table").append("<tr><td><a href=\"\edit.html?site="+rows[d].site+"&product="+rows[d].product+"\">Edit</a>"
+                        +"</td><td>"+rows[d].site
+                        +"</td><td>"+rows[d].product
+                        +"</td><td>"+rows[d].obs_type
+                        +"</td><td>"+rows[d].status_code
+                        +"</td><td><div style=\"overflow-y :scroll ; height:90px\">"
+                            +rows[d].status_text
+                        +"</div></td></tr>");
+                }
+            }
+            $("body").append("</html>")
+        });
+    </script>
+</html>
